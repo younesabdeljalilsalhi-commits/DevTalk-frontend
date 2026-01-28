@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Input from "../../../tools/input";
 import Btt from "../../../tools/button";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function SetNewPassword() {
+  const { token } = useParams(); // 👈 get token from URL
+
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -23,11 +25,15 @@ export default function SetNewPassword() {
     }
 
     setLoading(true);
+
     try {
       const res = await fetch("http://localhost:8080/auth/set-new-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({
+          password,
+          token, // 👈 send token to backend
+        }),
       });
 
       const data = await res.json();
@@ -41,6 +47,7 @@ export default function SetNewPassword() {
       console.error(err);
       alert("Server error. Try again later.");
     }
+
     setLoading(false);
   };
 
@@ -91,8 +98,7 @@ export default function SetNewPassword() {
               className="w-16 h-16 text-green-400 mx-auto mb-4"
               fill="none"
               stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
+              viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"

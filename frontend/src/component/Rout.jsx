@@ -26,7 +26,7 @@ export default function Rout() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/authentification" element={<Auth />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
-        <Route path="/setnewpassword" element={<SetNewPassword />} />
+        <Route path="/setnewpassword/:token" element={<SetNewPassword />} />
       </Routes>
     </>
   );
