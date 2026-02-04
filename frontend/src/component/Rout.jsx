@@ -6,6 +6,10 @@ import SignUp from "./login and sign up/signup/signup";
 import Auth from "./login and sign up/auth/authentification";
 import ForgetPassword from "./login and sign up/login/forgetpassword.jsx";
 import SetNewPassword from "./login and sign up/login/setnewpassword.jsx";
+import MainChatt from "./chat-pages/mainchatt.jsx";
+import Profile from "./chat-pages/profile.jsx";
+import Chatt from "./chat-pages/chatt.jsx";
+import Userpage from "./chat-pages/userpage.jsx";
 export default function Rout() {
   const location = useLocation();
 
@@ -14,7 +18,11 @@ export default function Rout() {
     location.pathname === "/signup" ||
     location.pathname === "/authentification" ||
     location.pathname === "/forgetpassword" ||
-    location.pathname === "/setnewpassword";
+    location.pathname.startsWith("/set-new-password") ||
+    location.pathname.startsWith("/mainchatt") ||
+    location.pathname.startsWith("/profile") ||
+    location.pathname.startsWith("/chatt") ||
+    location.pathname.startsWith("/userpage");
 
   return (
     <>
@@ -26,7 +34,11 @@ export default function Rout() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/authentification" element={<Auth />} />
         <Route path="/forgetpassword" element={<ForgetPassword />} />
-        <Route path="/setnewpassword/:token" element={<SetNewPassword />} />
+        <Route path="/set-new-password/:token" element={<SetNewPassword />} />
+        <Route path="/mainchatt" element={<MainChatt />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/chatt" element={<Chatt />} />
+        <Route path="/userpage" element={<Userpage />} />
       </Routes>
     </>
   );

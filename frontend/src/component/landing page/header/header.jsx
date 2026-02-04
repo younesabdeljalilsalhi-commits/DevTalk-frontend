@@ -3,42 +3,30 @@ import logo from "../../../assets/ewrtyu.png";
 
 export default function Header() {
   return (
-    <header className="w-full h-32 bg-white flex items-center justify-between px-20 border-b border-gray-200">
-      <div className="flex items-center gap-2.5">
+    <header className="w-full border-b border-gray-200 bg-white">
+      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 h-[80px]">
         <Link to="/">
           <img
-            className="mt-16 w-96 h-64 object-cover cursor-pointer"
             src={logo}
             alt="Devtalk logo"
+            className="h-[180px] pt-4 object-contain"
           />
         </Link>
-      </div>
 
-      <div className="flex items-center gap-20">
-        <nav className="nav">
-          <ul className="flex items-center gap-12 list-none text-4xl">
-            <li>
-              <a
-                href="#features"
-                className="no-underline text-gray-900 font-medium transition-colors hover:text-blue-500">
-                features
-              </a>
-            </li>
-            <li>
-              <a
-                href="#contact"
-                className="no-underline text-gray-900 font-medium transition-colors hover:text-blue-500">
-                contact
-              </a>
-            </li>
-          </ul>
+        <nav className="hidden md:flex items-center flex-center gap-12 text-xl font-medium text-gray-700">
+          <a href="#features" className="hover:text-blue-600">
+            Features
+          </a>
+          <a href="#contact" className="hover:text-blue-600">
+            Contact
+          </a>
+
+          <Link to="/signup">
+            <button className="bg-gradient-to-r from-blue-500 to-teal-600 text-white px-7 py-3 rounded-full font-semibold shadow-md hover:opacity-90 transition">
+              Get Started
+            </button>
+          </Link>
         </nav>
-
-        <Link to="/signup">
-          <button className="bg-gradient-to-r from-blue-500 to-teal-600 text-white border-none py-3 px-7 rounded-full cursor-pointer font-bold text-3xl transition-all duration-250 hover:opacity-90 hover:shadow-lg hover:shadow-blue-500/35">
-            Get Started
-          </button>
-        </Link>
       </div>
     </header>
   );
