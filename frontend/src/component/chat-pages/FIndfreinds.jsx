@@ -108,7 +108,7 @@ export default function FindFriends() {
       {/* EMPTY STATE */}
       {search.trim() === "" && (
         <p className="text-center text-gray-500 mt-20">
-          Start typing a username to find friends 👀
+          Start typing a username to find friends
         </p>
       )}
 

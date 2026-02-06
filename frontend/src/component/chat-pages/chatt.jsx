@@ -36,12 +36,7 @@ export default function Chatt() {
     if (message.trim()) {
       setMessages((prev) => [
         ...prev,
-        {
-          id: Date.now(),
-          type: "text",
-          content: message,
-          sender: "me",
-        },
+        { id: Date.now(), type: "text", content: message, sender: "me" },
       ]);
     }
 
@@ -62,52 +57,63 @@ export default function Chatt() {
   };
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const scrollToBottom = () => {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    // Scroll immediately for text messages
+    scrollToBottom();
+
+    // Also scroll after images load
+    const images = document.querySelectorAll(".chat-img");
+    images.forEach((img) => {
+      img.onload = scrollToBottom;
+    });
   }, [messages]);
 
   return (
     <div className="flex h-screen w-full bg-gray-50">
       <Sidebar />
 
-      <main className="flex-1 flex flex-col bg-gradient-to-b from-indigo-50 to-indigo-100">
+      <main className="flex-1 flex flex-col bg-gradient-to-b from-blue-50 to-indigo-400">
         {/* HEADER */}
-        <div className="flex items-center justify-between p-4 bg-blue-100 border-b border-indigo-300">
+        <div className="flex items-center justify-between p-4 bg-white shadow-md border-b border-gray-200">
           <ProfileChat Src={STpfp} Profilename="Joe Done" Active="Online" />
 
-          <div className="flex gap-3 text-xl text-gray-600">
-            <button className="p-2 hover:bg-gray-200 rounded-full">
+          <div className="flex gap-3 text-gray-600 text-xl">
+            <button className="p-2 hover:bg-indigo-100 rounded-full transition">
               <FiPhone />
             </button>
-            <button className="p-2 hover:bg-gray-200 rounded-full">
+            <button className="p-2 hover:bg-indigo-100 rounded-full transition">
               <FiVideo />
             </button>
-            <button className="p-2 hover:bg-gray-200 rounded-full">
+            <button className="p-2 hover:bg-indigo-100 rounded-full transition">
               <FiSettings />
             </button>
           </div>
         </div>
 
         {/* MESSAGES */}
-        <div className="flex-1 w-full overflow-y-auto p-6 flex flex-col justify-end gap-4 bg-gradient-to-t from-blue-500 to-blue-100">
+        <div className="flex-1 w-full overflow-y-auto p-6 flex flex-col gap-4">
           {messages.map((msg) =>
             msg.sender === "me" ? (
-              <div key={msg.id} className="flex justify-end gap-3">
-                <div className="bg-indigo-600 text-white p-3 rounded-2xl max-w-xs shadow">
+              <div key={msg.id} className="flex justify-end gap-3 items-end">
+                <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white p-3 rounded-2xl max-w-xs shadow-md break-words">
                   {msg.type === "text" && msg.content}
                   {msg.type === "image" && (
                     <img
                       src={msg.content}
                       alt="sent"
-                      className="rounded-lg max-w-xs flex items-center justify-center"
+                      className="chat-img rounded-lg max-w-xs max-h-64 object-contain"
                     />
                   )}
                 </div>
-                <Pfp Src={STpfp} Size="small" />
+                <Pfp Src={STpfp} Size="small" border />
               </div>
             ) : (
               <div key={msg.id} className="flex items-start gap-3">
-                <Pfp Src={STpfp} Size="small" />
-                <div className="bg-gray-200 p-3 rounded-2xl max-w-xs shadow">
+                <Pfp Src={STpfp} Size="small" border />
+                <div className="bg-white p-3 rounded-2xl max-w-xs shadow-sm break-words">
                   {msg.content}
                 </div>
               </div>
@@ -116,18 +122,19 @@ export default function Chatt() {
           <div ref={messagesEndRef} />
         </div>
 
+        {/* IMAGE PREVIEW */}
         {selectedImage && (
-          <div className="px-4 pb-2 ">
+          <div className="px-4 pb-2 flex justify-start">
             <div className="relative w-32">
               <img
                 src={selectedImage.preview}
                 alt="preview"
-                className="rounded-lg border shadow"
+                className="rounded-xl border shadow"
               />
               <button
                 type="button"
                 onClick={() => setSelectedImage(null)}
-                className="absolute -top-2 -right-2 bg-red-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm">
+                className="absolute -top-2 -right-2 bg-red-500 text-white w-6 h-6 rounded-full flex items-center justify-center text-sm shadow-lg">
                 ✕
               </button>
             </div>
@@ -137,12 +144,12 @@ export default function Chatt() {
         {/* INPUT */}
         <form
           onSubmit={handleMessageSend}
-          className="p-4 flex items-center gap-2 bg-blue-100 border-t border-indigo-300">
+          className="p-4 flex items-center gap-2 bg-white shadow-inner border-t border-gray-200 sticky bottom-0">
           <AttachmentButton
             trigger={
               <button
                 type="button"
-                className="p-2 hover:bg-gray-200 rounded-full">
+                className="p-2 hover:bg-gray-100 rounded-full transition">
                 <FiPaperclip className="text-xl" />
               </button>
             }
@@ -156,21 +163,23 @@ export default function Chatt() {
             ]}
           />
 
-          <button type="button" className="p-2 hover:bg-gray-200 rounded-full">
+          <button
+            type="button"
+            className="p-2 hover:bg-gray-100 rounded-full transition">
             <FiMic className="text-xl" />
           </button>
 
           <input
             type="text"
             placeholder="Type a message..."
-            className="flex-1 p-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="flex-1 p-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
 
           <button
             type="submit"
-            className="p-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700">
+            className="p-3 bg-indigo-600 text-white rounded-full hover:bg-indigo-700 transition shadow-md">
             <AiOutlineSend className="text-xl" />
           </button>
         </form>
