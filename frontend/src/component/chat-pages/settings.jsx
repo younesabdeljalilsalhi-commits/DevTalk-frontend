@@ -23,7 +23,7 @@ export default function Settings() {
   useEffect(() => {
     // async function fetchUserProfile() {
     //   try {
-    //     const res = await fetch("http://localhost:8080/user/profile", {
+    //     const res = await fetch("http://localhost:8080/user/profile/Get-profile", {
     //       method: "GET",
     //       credentials: "include",
     //     });
@@ -62,22 +62,7 @@ export default function Settings() {
     setUser({ ...user, username, bio, profileImage: preview });
     alert("Profile updated successfully ✅");
 
-    /* BACKEND VERSION
-    try {
-      const res = await fetch("http://localhost:8080/user/profile", {
-        method: "PUT",
-        credentials: "include",
-        body: formData,
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Update failed");
-      setUser(data);
-      alert("Profile updated successfully ✅");
-    } catch (err) {
-      console.error(err);
-      alert(err.message);
-    }
-    */
+ 
   }
 
   /* CANCEL CHANGES */

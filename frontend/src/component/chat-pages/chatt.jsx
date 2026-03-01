@@ -94,32 +94,35 @@ export default function Chatt() {
         </div>
 
         {/* MESSAGES */}
+        {/* MESSAGES */}
         <div className="flex-1 w-full overflow-y-auto p-6 flex flex-col gap-4">
-          {messages.map((msg) =>
-            msg.sender === "me" ? (
-              <div key={msg.id} className="flex justify-end gap-3 items-end">
-                <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white p-3 rounded-2xl max-w-xs shadow-md break-words">
-                  {msg.type === "text" && msg.content}
-                  {msg.type === "image" && (
-                    <img
-                      src={msg.content}
-                      alt="sent"
-                      className="chat-img rounded-lg max-w-xs max-h-64 object-contain"
-                    />
-                  )}
+          <div className="flex flex-col gap-4 mt-auto">
+            {messages.map((msg) =>
+              msg.sender === "me" ? (
+                <div key={msg.id} className="flex justify-end gap-3 items-end">
+                  <div className="bg-gradient-to-br from-indigo-500 to-indigo-600 text-white p-3 rounded-2xl max-w-xs shadow-md break-words">
+                    {msg.type === "text" && msg.content}
+                    {msg.type === "image" && (
+                      <img
+                        src={msg.content}
+                        alt="sent"
+                        className="chat-img rounded-lg max-w-xs max-h-64 object-contain"
+                      />
+                    )}
+                  </div>
+                  <Pfp Src={STpfp} Size="small" border />
                 </div>
-                <Pfp Src={STpfp} Size="small" border />
-              </div>
-            ) : (
-              <div key={msg.id} className="flex items-start gap-3">
-                <Pfp Src={STpfp} Size="small" border />
-                <div className="bg-white p-3 rounded-2xl max-w-xs shadow-sm break-words">
-                  {msg.content}
+              ) : (
+                <div key={msg.id} className="flex items-start gap-3">
+                  <Pfp Src={STpfp} Size="small" border />
+                  <div className="bg-white p-3 rounded-2xl max-w-xs shadow-sm break-words">
+                    {msg.content}
+                  </div>
                 </div>
-              </div>
-            ),
-          )}
-          <div ref={messagesEndRef} />
+              ),
+            )}
+            <div ref={messagesEndRef} />
+          </div>
         </div>
 
         {/* IMAGE PREVIEW */}

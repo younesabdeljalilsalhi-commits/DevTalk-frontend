@@ -9,7 +9,7 @@ export default function FindFriends() {
   const [users, setUsers] = useState([
     {
       id: 1,
-      username: "alex",
+      username: "ali",
       online: true,
       requested: false,
       profileImage: STpfp,
@@ -23,7 +23,7 @@ export default function FindFriends() {
     },
     {
       id: 3,
-      username: "john_dev",
+      username: "moundir_dev",
       online: true,
       requested: false,
       profileImage: STpfp,
